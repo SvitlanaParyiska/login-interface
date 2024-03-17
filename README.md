@@ -1,3 +1,11 @@
+<h1 align="center">
+  <br>
+  <a href="https://svitlanaparyiska.github.io/login-interface/"><img src="./src/images/logo.jpg" alt="Medicine Delivery App" width="200"></a>
+  <br>
+ToDo list
+  <br>
+</h1>
+
 # Login Interface
 
 This project was bootstrapped with
@@ -23,5 +31,7 @@ performance.
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+[Link to site](https://stirring-frangipane-e702da.netlify.app/ 'Login Interface')
 
 ![GitHub ReadMe](./src/images/readme.PNG)
