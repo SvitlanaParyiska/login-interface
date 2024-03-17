@@ -1,0 +1,106 @@
+@import-normalize;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg-primary: #fff;
+  --color-bg-accent: #316fea;
+  --color-text-primary: #1a1919;
+  --color-text-accent: color: #fff;
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@font-face {
+  font-family: 'Basis Grotesque Pro';
+  font-weight: 400;
+  src: local('Inter'),
+    url('./fonts/regular/BasisGrotesquePro-Regular.woff2') format('woff2'),
+    url('./fonts/regular/BasisGrotesquePro-Regular.woff') format('woff'),
+    url('./fonts/regular/BasisGrotesquePro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Basis Grotesque Pro';
+  font-weight: 500;
+  src: local('Inter'),
+    url('./fonts/medium/BasisGrotesquePro-Medium.woff2') format('woff2'),
+    url('./fonts/medium/BasisGrotesquePro-Medium.woff') format('woff'),
+    url('./fonts/medium/BasisGrotesquePro-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Basis Grotesque Pro';
+  font-weight: 700;
+  src: local('Inter'),
+    url('./fonts/bold/BasisGrotesquePro-Bold.woff2') format('woff2'),
+    url('./fonts/bold/BasisGrotesquePro-Bold.woff') format('woff'),
+    url('./fonts/bold/BasisGrotesquePro-Bold.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: 'Basis Grotesque Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg-primary);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  display: block;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
