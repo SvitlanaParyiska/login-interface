@@ -2,11 +2,9 @@
   <br>
   <a href="https://svitlanaparyiska.github.io/login-interface/"><img src="./src/images/logo.jpg" alt="Medicine Delivery App" width="200"></a>
   <br>
-ToDo list
+Login Interface
   <br>
 </h1>
-
-# Login Interface
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
