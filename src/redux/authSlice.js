@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { logIn, refreshUser } from './authOperations';
+import {
+  accessToken,
+  forgotPassword,
+  logIn,
+  refreshUser,
+  setNewPassword,
+} from './authOperations';
 
 const initialState = {
-  userEmail: null,
   token: null,
+  refreshToken: null,
   isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
@@ -25,22 +31,42 @@ const authSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.userEmail = action.payload.user;
-        state.token = action.payload.token;
+      .addCase(logIn.fulfilled, (state, { payload }) => {
+        state.token = payload.access_token;
+        state.refreshToken = payload.refresh_token;
         state.isLoggedIn = true;
       })
       .addCase(logIn.rejected, handleRejected)
       .addCase(logIn.pending, handlePending)
       .addCase(refreshUser.pending, handlePending)
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.userEmail = action.payload;
+      .addCase(refreshUser.fulfilled, (state, { payload }) => {
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.token = payload.access_token;
+        state.refreshToken = payload.refresh_token;
+      })
+      .addCase(refreshUser.rejected, handleRejected)
+      .addCase(forgotPassword.pending, handlePending)
+      .addCase(forgotPassword.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(refreshUser.rejected, state => {
+      .addCase(forgotPassword.rejected, handleRejected)
+      .addCase(setNewPassword.pending, handlePending)
+      .addCase(setNewPassword.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
         state.isRefreshing = false;
-      });
+      })
+      .addCase(setNewPassword.rejected, handleRejected)
+      .addCase(accessToken.pending, handlePending)
+      .addCase(accessToken.fulfilled, (state, { payload }) => {
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.token = payload.access_token;
+        state.refreshToken = payload.refresh_token;
+        state.isLoggedIn = payload.access_token ? true : false;
+      })
+      .addCase(accessToken.rejected, handleRejected);
   },
 });
 

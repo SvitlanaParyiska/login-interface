@@ -1,7 +1,9 @@
+import Title from 'components/Title';
+
 function HomePage() {
   return (
     <main>
-      <div>Welcome</div>
+      <Title text={'Welcome!'} />
     </main>
   );
 }

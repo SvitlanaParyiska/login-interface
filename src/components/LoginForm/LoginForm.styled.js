@@ -11,7 +11,10 @@ export const Form = styled.form`
 export const StyledInput = styled.input`
   width: 100%;
   height: 48px;
-  border: 1.2px solid #d3d8dc;
+  /* border: 1.2px solid #d3d8dc; */
+  border: ${props =>
+    props.error ? 'red' : props.success ? 'green' : '1.2px solid #d3d8dc'};
+
   border-radius: 6px;
   padding: 0 12px;
   font-family: inherit;

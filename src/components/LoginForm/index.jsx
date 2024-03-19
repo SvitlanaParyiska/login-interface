@@ -14,41 +14,37 @@ import {
   SvgPasswordIcon,
 } from './LoginForm.styled';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 function LoginForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [emailValid, setEmailValid] = useState('');
+  const [emailValid, setEmailValid] = useState(false);
 
   useEffect(() => {
-    if (email.match(emailPattern)) {
-      setEmailValid('valid');
+    if (email.match(emailPattern) && email.length > 14) {
+      setEmailValid(true);
     }
   }, [email]);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      dispatch(logIn(email, password)).then(({ payload }) => {
-        if (payload.token) {
-          toast.success('Welcome!', {
-            duration: 3000,
+    dispatch(logIn({ email, password })).then(({ payload }) => {
+      if (payload?.token) {
+        toast
+          .success('Welcome!', {
+            duration: 4000,
             position: 'top-right',
-          });
-          e.currentTarget.resetForm();
-        }
-      });
-    } catch (error) {
-      toast.error('Fill in correct email or password!', {
-        duration: 3000,
-        position: 'top-right',
-      });
-    }
+          })
+          .then(() => navigate('/', { replace: true }));
+        e.currentTarget.reset();
+      }
+    });
   };
 
   const togglePassword = () => {
@@ -68,7 +64,7 @@ function LoginForm() {
             id="email"
             name="email"
             type="email"
-            className={emailValid}
+            className={emailValid ? 'validInput' : ''}
             placeholder="Work email"
             pattern={emailPattern}
             minLength="15"
@@ -77,7 +73,7 @@ function LoginForm() {
           />
         </div>
 
-        {emailValid.length > 0 && (
+        {emailValid && (
           <StyledPasswordContainer>
             <label className="visually-hidden" htmlFor="password">
               password

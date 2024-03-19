@@ -11,36 +11,39 @@ import {
 } from './CreateNewPasswordForm.styled';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { resetPassword } from '../../redux/authOperations';
+import { setNewPassword } from '../../redux/authOperations';
 
-function CreateNewPasswordForm() {
+function CreateNewPasswordForm({ token }) {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState(null);
+  const [password_confirm, setPassword_confirm] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [passwordsMatches, setPasswordsMatches] = useState(false);
+  const secret = document.cookie.match(/CSRF-TOKEN=([\w-]+)/);
 
   useEffect(() => {
-    if (password === passwordConfirm) {
+    if (password === password_confirm) {
       setPasswordsMatches(true);
     }
-  }, [password, passwordConfirm]);
+  }, [password, password_confirm]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      dispatch(resetPassword(password)).then(({ payload }) => {
-        if (payload.token) {
-          toast.success('Welcome!', {
-            duration: 3000,
-            position: 'top-right',
-          });
-          e.currentTarget.resetForm();
-        }
+      dispatch(
+        setNewPassword({
+          password,
+          password_confirm,
+          token,
+          secret,
+        })
+      ).then(() => {
+        setPassword('');
+        setPassword_confirm('');
       });
     } catch (error) {
-      toast.error('Fill in correct email or password!', {
+      toast.error('Error of reset. Please try again!', {
         duration: 3000,
         position: 'top-right',
       });
@@ -81,7 +84,7 @@ function CreateNewPasswordForm() {
           placeholder="Password"
           minLength="8"
           required
-          onChange={e => setPasswordConfirm(e.target.value)}
+          onChange={e => setPassword_confirm(e.target.value)}
         />
         <IconPasswordWrapper
           onClick={() => setShowPasswordConfirm(prevState => !prevState)}
